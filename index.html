@@ -3,21 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>正正羊羊专属服务网站</title>
+<title>西歪叉叉 · 个人主页 & 简历</title>
 <style>
   :root {
-    --bg: #0f0f0f;
-    --card: #1a1a1a;
-    --accent: #c9a96e;
+    --bg: #0a0a0a;
+    --card: #141414;
+    --accent: #f5a524;
+    --accent2: #00d4ff;
     --text: #f5f5f5;
     --muted: #888;
     --border: rgba(255,255,255,0.08);
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
-
-  html { scroll-behavior:smooth; }
-
+  html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
     background: var(--bg);
@@ -31,29 +30,29 @@
     position: fixed; top:0; left:0; right:0;
     display:flex; justify-content:space-between; align-items:center;
     padding: 1.2rem 2rem;
-    background: rgba(15,15,15,0.85);
+    background: rgba(10,10,10,0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     z-index: 100;
   }
-  nav .logo { font-size:1.1rem; font-weight:700; letter-spacing:0.05em; }
+  nav .logo { font-size:1.2rem; font-weight:800; letter-spacing:0.05em; }
   nav .logo span { color: var(--accent); }
   nav ul { display:flex; gap:2rem; list-style:none; }
   nav a { color:var(--muted); text-decoration:none; font-size:0.9rem; transition:color .3s; }
-  nav a:hover { color: var(--text); }
+  nav a:hover { color: var(--accent); }
 
   /* ===== Hero ===== */
   .hero {
     min-height: 100vh;
     display:flex; flex-direction:column; justify-content:center; align-items:center;
     text-align:center;
-    position:relative;
     padding: 2rem;
+    position:relative;
   }
   .hero::before {
     content:'';
     position:absolute; inset:0;
-    background: radial-gradient(ellipse at 50% 40%, rgba(201,169,110,0.08) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 50% 30%, rgba(245,165,36,0.1) 0%, transparent 60%);
     pointer-events:none;
   }
   .hero .tag {
@@ -62,19 +61,33 @@
     opacity:0; animation: fadeUp 1s 0.2s forwards;
   }
   .hero h1 {
-    font-size: clamp(2.5rem, 8vw, 5.5rem);
-    font-weight: 800;
-    line-height:1.1;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 900;
+    line-height:1;
     margin-bottom:1.5rem;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     opacity:0; animation: fadeUp 1s 0.4s forwards;
   }
-  .hero h1 .highlight { color: var(--accent); }
   .hero .subtitle {
     font-size: clamp(1rem, 3vw, 1.4rem);
     color: var(--muted);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
     opacity:0; animation: fadeUp 1s 0.6s forwards;
   }
+  .hero .tags {
+    display:flex; gap:0.8rem; flex-wrap:wrap; justify-content:center;
+    margin-bottom: 2.5rem;
+    opacity:0; animation: fadeUp 1s 0.7s forwards;
+  }
+  .hero .tag-chip {
+    padding: 0.4rem 1rem; border:1px solid var(--border);
+    border-radius: 50px; font-size:0.85rem; color:var(--muted);
+  }
+  .hero .tag-chip.amber { color:var(--accent); border-color: rgba(245,165,36,0.3); }
+  .hero .tag-chip.cyan { color:var(--accent2); border-color: rgba(0,212,255,0.3); }
   .hero .cta-group { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
     opacity:0; animation: fadeUp 1s 0.8s forwards; }
   .btn {
@@ -85,13 +98,13 @@
     font-size:0.95rem;
     font-weight:600;
     transition: all .3s;
+    cursor:pointer; border:none;
   }
-  .btn-primary { background: var(--accent); color:#0f0f0f; }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,169,110,0.3); }
+  .btn-primary { background: var(--accent); color:#0a0a0a; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,165,36,0.4); }
   .btn-ghost { border:1px solid var(--border); color:var(--text); }
   .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* scroll indicator */
   .scroll-hint {
     position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
     width:24px; height:40px; border:1px solid var(--muted); border-radius:12px;
@@ -102,65 +115,98 @@
     animation: scrollDot 1.8s infinite;
   }
 
-  /* ===== Section base ===== */
-  section { padding: 6rem 2rem; max-width: 1000px; margin: 0 auto; }
+  /* ===== Section ===== */
+  section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
   .section-label { font-size:0.8rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
   .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight:700; margin-bottom:1rem; }
   .section-desc { color:var(--muted); font-size:1rem; margin-bottom:3rem; max-width:600px; }
 
-  /* ===== Services ===== */
-  .services-grid {
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap:1.5rem;
+  /* ===== Category blocks ===== */
+  .category {
+    margin-bottom: 4rem;
   }
-  .service-card {
+  .category-header {
+    display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;
+  }
+  .category-icon {
+    width:50px; height:50px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem;
+    background: linear-gradient(135deg, rgba(245,165,36,0.15), rgba(245,165,36,0.05));
+    border: 1px solid rgba(245,165,36,0.2);
+  }
+  .category.cyan .category-icon {
+    background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
+    border: 1px solid rgba(0,212,255,0.2);
+  }
+  .category h3 { font-size:1.4rem; font-weight:700; }
+  .category-sub { color:var(--muted); font-size:0.9rem; }
+
+  .skill-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap:1rem;
+  }
+  .skill-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
+    border-radius: 14px;
+    padding: 1.5rem;
     transition: all .4s;
     position:relative;
     overflow:hidden;
   }
-  .service-card::before {
+  .skill-card::before {
     content:''; position:absolute; top:0; left:0; right:0; height:2px;
     background: var(--accent);
     transform: scaleX(0); transform-origin:left; transition: transform .4s;
   }
-  .service-card:hover { transform: translateY(-4px); border-color: rgba(201,169,110,0.3); }
-  .service-card:hover::before { transform: scaleX(1); }
-  .service-card .icon { font-size:2.2rem; margin-bottom:1rem; }
-  .service-card h3 { font-size:1.15rem; font-weight:600; margin-bottom:0.6rem; }
-  .service-card p { color:var(--muted); font-size:0.9rem; }
+  .skill-card:hover { transform: translateY(-3px); border-color: rgba(245,165,36,0.3); }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-card .emoji { font-size:1.8rem; margin-bottom:0.6rem; display:block; }
+  .skill-card h4 { font-size:1.05rem; font-weight:600; margin-bottom:0.3rem; }
+  .skill-card .level { font-size:0.8rem; color:var(--accent); letter-spacing:0.05em; }
+  .category.cyan .skill-card .level { color:var(--accent2); }
+  .category.cyan .skill-card::before { background: var(--accent2); }
+  .category.cyan .skill-card:hover { border-color: rgba(0,212,255,0.3); }
 
-  /* ===== Stats ===== */
-  .stats {
-    display:flex; justify-content:center; gap:3rem; flex-wrap:wrap;
-    padding: 3rem 2rem;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+  /* ===== Profile / 简历 ===== */
+  .resume-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap:1.5rem;
   }
-  .stat { text-align:center; }
-  .stat .num { font-size:2.5rem; font-weight:800; color:var(--accent); }
-  .stat .label { font-size:0.85rem; color:var(--muted); margin-top:0.3rem; }
-
-  /* ===== Booking ===== */
-  .booking-form {
+  .resume-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 3rem;
-    max-width: 560px;
+    border-radius: 16px;
+    padding: 1.8rem;
+    position:relative;
+  }
+  .resume-card .label { font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.2em; margin-bottom:0.6rem; }
+  .resume-card .value { font-size:1.15rem; font-weight:600; }
+  .resume-card .value.highlight { color: var(--accent); }
+
+  /* ===== Booking ===== */
+  .booking {
+    background: linear-gradient(135deg, rgba(245,165,36,0.05), transparent);
+    border: 1px solid rgba(245,165,36,0.2);
+    border-radius: 24px;
+    padding: 4rem 2rem;
+    text-align:center;
+    max-width: 700px;
     margin: 0 auto;
   }
-  .booking-form .form-group { margin-bottom:1.5rem; }
-  .booking-form label { display:block; font-size:0.85rem; color:var(--muted); margin-bottom:0.5rem; }
+  .booking h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom:0.6rem; }
+  .booking p { color:var(--muted); margin-bottom:2rem; }
+  .booking-form {
+    display:grid; gap:1rem; max-width: 500px; margin: 0 auto;
+  }
   .booking-form input, .booking-form select, .booking-form textarea {
-    width:100%; padding:0.8rem 1rem;
+    width:100%; padding:0.9rem 1.1rem;
     background: rgba(255,255,255,0.03);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
     color: var(--text);
     font-size:0.95rem;
     font-family: inherit;
@@ -170,25 +216,21 @@
     outline:none; border-color: var(--accent);
   }
   .booking-form textarea { resize:vertical; min-height:80px; }
-  .booking-form .btn-primary { width:100%; text-align:center; border:none; cursor:pointer; }
-  .form-msg { text-align:center; margin-top:1rem; font-size:0.9rem; color:var(--accent); display:none; }
+  .form-msg { color:var(--accent); font-size:0.9rem; margin-top:0.5rem; display:none; }
 
   /* ===== Contact ===== */
-  .contact-info {
-    display:flex; flex-direction:column; align-items:center; gap:0.6rem;
-    text-align:center;
-  }
-  .contact-info .name { font-size:1.4rem; font-weight:700; }
-  .contact-info .desc { color:var(--muted); font-size:0.95rem; }
-  .contact-info .social { display:flex; gap:1rem; margin-top:1rem; }
-  .contact-info .social a {
+  .contact { text-align:center; }
+  .contact .name { font-size:1.5rem; font-weight:700; margin-bottom:0.4rem; }
+  .contact .desc { color:var(--muted); margin-bottom:1.5rem; }
+  .contact .social { display:flex; gap:1rem; justify-content:center; }
+  .contact .social a {
     width:44px; height:44px; border-radius:50%;
     border:1px solid var(--border);
     display:flex; align-items:center; justify-content:center;
     color:var(--muted); text-decoration:none; font-size:1.1rem;
     transition: all .3s;
   }
-  .contact-info .social a:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+  .contact .social a:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
 
   /* ===== Footer ===== */
   footer {
@@ -209,12 +251,10 @@
   .reveal { opacity:0; transform:translateY(30px); transition: all .8s; }
   .reveal.visible { opacity:1; transform:translateY(0); }
 
-  /* ===== Mobile ===== */
   @media (max-width: 640px) {
     nav ul { display:none; }
     section { padding: 4rem 1.2rem; }
-    .stats { gap:2rem; }
-    .booking-form { padding:2rem 1.5rem; }
+    .booking { padding: 2.5rem 1.5rem; }
   }
 </style>
 </head>
@@ -222,154 +262,211 @@
 
 <!-- ===== Nav ===== -->
 <nav>
-  <div class="logo">正正羊羊<span>.</span></div>
+  <div class="logo">西歪叉叉<span>.</span></div>
   <ul>
     <li><a href="#home">首页</a></li>
-    <li><a href="#services">服务</a></li>
-    <li><a href="#booking">预约</a></li>
+    <li><a href="#skills">强项</a></li>
+    <li><a href="#resume">简历</a></li>
+    <li><a href="#booking">预约代打</a></li>
     <li><a href="#contact">联系</a></li>
   </ul>
 </nav>
 
 <!-- ===== Hero ===== -->
 <section class="hero" id="home">
-  <div class="tag">Exclusive Service</div>
-  <h1>史上最帅<br>最全能之<span class="highlight">人</span></h1>
-  <p class="subtitle">能文能武 · 能唱能跳 · 全能高手</p>
+  <div class="tag">Personal Profile · 代打服务</div>
+  <h1>西歪叉叉</h1>
+  <p class="subtitle">棋牌通吃 · 游戏称神 · 深圳湾业主</p>
+  <div class="tags">
+    <span class="tag-chip amber">🀄 麻将高手</span>
+    <span class="tag-chip amber">♠️ 德州高手</span>
+    <span class="tag-chip cyan">🎮 CS:GO 魔王S</span>
+    <span class="tag-chip cyan">⚔️ 瓦罗兰特 神三</span>
+  </div>
   <div class="cta-group">
-    <a href="#booking" class="btn btn-primary">立即预约</a>
-    <a href="#services" class="btn btn-ghost">了解服务</a>
+    <a href="#booking" class="btn btn-primary">立即预约代打</a>
+    <a href="#skills" class="btn btn-ghost">查看全部强项</a>
   </div>
   <div class="scroll-hint"></div>
 </section>
 
-<!-- ===== Stats ===== -->
-<div class="stats reveal">
-  <div class="stat"><div class="num">∞</div><div class="label">技能点</div></div>
-  <div class="stat"><div class="num">100%</div><div class="label">全能指数</div></div>
-  <div class="stat"><div class="num">24h</div><div class="label">随时待命</div></div>
-  <div class="stat"><div class="num">#1</div><div class="label">宇宙第一</div></div>
-</div>
+<!-- ===== Skills / 强项 ===== -->
+<section id="skills">
+  <div class="section-label reveal">Skills</div>
+  <h2 class="section-title reveal">强项一览</h2>
+  <p class="section-desc reveal">棋牌游戏 · 端游竞技 · 跨境电商，三个领域，三个天花板。</p>
 
-<!-- ===== Services ===== -->
-<section id="services">
-  <div class="section-label reveal">Services</div>
-  <h2 class="section-title reveal">服务介绍</h2>
-  <p class="section-desc reveal">文武双全，才艺兼备——只有一个正正羊羊，满足你的一切想象。</p>
+  <!-- 棋牌板块 -->
+  <div class="category reveal">
+    <div class="category-header">
+      <div class="category-icon">🀄</div>
+      <div>
+        <h3>棋牌板块</h3>
+        <div class="category-sub">线下实战派 · 通杀全桌</div>
+      </div>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <span class="emoji">♠️</span>
+        <h4>德州扑克</h4>
+        <div class="level">★ 高手 · 长期盈利</div>
+      </div>
+      <div class="skill-card">
+        <span class="emoji">🀄</span>
+        <h4>国标麻将</h4>
+        <div class="level">★ 高手 · 听牌零失误</div>
+      </div>
+      <div class="skill-card">
+        <span class="emoji">🃏</span>
+        <h4>跑得快</h4>
+        <div class="level">★ 高手 · 出牌狠准</div>
+      </div>
+      <div class="skill-card">
+        <span class="emoji">🦐</span>
+        <h4>鱼虾蟹</h4>
+        <div class="level">★ 高手 · 押注稳准</div>
+      </div>
+      <div class="skill-card">
+        <span class="emoji">🐂</span>
+        <h4>牛牛</h4>
+        <div class="level">★ 高手 · 通杀全场</div>
+      </div>
+    </div>
+  </div>
 
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <div class="icon">✍️</div>
-      <h3>能文</h3>
-      <p>下笔如有神，文案、策划、演讲稿，样样精通，字字珠玑。</p>
+  <!-- 游戏板块 -->
+  <div class="category cyan reveal">
+    <div class="category-header">
+      <div class="category-icon">🎮</div>
+      <div>
+        <h3>游戏板块</h3>
+        <div class="category-sub">段位王者 · 操作天花板</div>
+      </div>
     </div>
-    <div class="service-card reveal">
-      <div class="icon">🥋</div>
-      <h3>能武</h3>
-      <p>体魄强健，身手敏捷，能打能扛，安全感拉满。</p>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <span class="emoji">🔫</span>
+        <h4>CS:GO</h4>
+        <div class="level">★ 魔王 S 级</div>
+      </div>
+      <div class="skill-card">
+        <span class="emoji">⚔️</span>
+        <h4>英雄联盟</h4>
+        <div class="level">★ 大乱斗之神</div>
+      </div>
+      <div class="skill-card">
+        <span class="emoji">🎯</span>
+        <h4>无畏契约 (Valorant)</h4>
+        <div class="level">★ 神三</div>
+      </div>
     </div>
-    <div class="service-card reveal">
-      <div class="icon">🎤</div>
-      <h3>能唱</h3>
-      <p>嗓音天籁，风格百变，从流行到美声，开口即惊艳。</p>
+  </div>
+
+  <!-- 工作板块 -->
+  <div class="category reveal">
+    <div class="category-header">
+      <div class="category-icon">💼</div>
+      <div>
+        <h3>工作板块</h3>
+        <div class="category-sub">专业技能 · 商业实战</div>
+      </div>
     </div>
-    <div class="service-card reveal">
-      <div class="icon">💃</div>
-      <h3>能跳</h3>
-      <p>节奏感顶级，舞姿帅气，街舞古典现代，统统拿捏。</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="icon">🧠</div>
-      <h3>全能智囊</h3>
-      <p>上知天文下知地理，有问题找正正羊羊就对了。</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="icon">⚡</div>
-      <h3>专属定制</h3>
-      <p>一对一专属服务，按需定制方案，满意为止。</p>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <span class="emoji">📦</span>
+        <h4>亚马逊运营</h4>
+        <div class="level">★ 顶尖运营 · 多类目操盘</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Booking ===== -->
-<section id="booking">
-  <div class="section-label reveal">Booking</div>
-  <h2 class="section-title reveal">预约服务</h2>
-  <p class="section-desc reveal">填写以下信息，正正羊羊将亲自为你安排专属服务时段。</p>
+<!-- ===== Resume / 简历 ===== -->
+<section id="resume">
+  <div class="section-label reveal">Resume</div>
+  <h2 class="section-title reveal">个人实力</h2>
+  <p class="section-desc reveal">不是在吹，是真的硬核。</p>
 
-  <form class="booking-form reveal" onsubmit="return handleSubmit(event)">
-    <div class="form-group">
-      <label>你的名字</label>
-      <input type="text" id="bk-name" placeholder="请输入你的名字" required>
+  <div class="resume-grid">
+    <div class="resume-card reveal">
+      <div class="label">📍 现居坐标</div>
+      <div class="value">深圳 · 南山</div>
     </div>
-    <div class="form-group">
-      <label>联系方式</label>
-      <input type="text" id="bk-contact" placeholder="手机号 / 微信 / 邮箱" required>
+    <div class="resume-card reveal">
+      <div class="label">💼 职业身份</div>
+      <div class="value">南山市中心蓝领</div>
     </div>
-    <div class="form-group">
-      <label>预约项目</label>
-      <select id="bk-service" required>
-        <option value="">请选择服务</option>
-        <option>能文 — 文案/策划</option>
-        <option>能武 — 体能/护卫</option>
-        <option>能唱 — 演唱/教学</option>
-        <option>能跳 — 舞蹈/编舞</option>
-        <option>全能智囊 — 咨询/答疑</option>
-        <option>专属定制 — 其他需求</option>
+    <div class="resume-card reveal">
+      <div class="label">🏠 资产配置</div>
+      <div class="value highlight">深圳湾 · 业主</div>
+    </div>
+    <div class="resume-card reveal">
+      <div class="label">🎯 代打服务</div>
+      <div class="value highlight">棋牌 / 端游 / 均可约</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Booking / 代打预约 ===== -->
+<section id="booking">
+  <div class="booking reveal">
+    <h2>预约代打服务</h2>
+    <p>棋牌 / CS:GO / LOL / 瓦罗兰特 均可代打，下单立接</p>
+
+    <form class="booking-form" onsubmit="return handleSubmit(event)">
+      <input type="text" id="bk-name" placeholder="你的名字 / 代练称呼" required>
+      <input type="text" id="bk-contact" placeholder="联系方式（微信 / QQ / 手机号）" required>
+      <select id="bk-type" required>
+        <option value="">选择代打项目</option>
+        <option>🀄 棋牌类（麻将/德州/跑得快/鱼虾蟹/牛牛）</option>
+        <option>🔫 CS:GO 代打上分</option>
+        <option>⚔️ LOL 大乱斗代打</option>
+        <option>🎯 瓦罗兰特 代打上分</option>
+        <option>💼 亚马逊运营咨询</option>
+        <option>📋 其他服务</option>
       </select>
-    </div>
-    <div class="form-group">
-      <label>期望日期</label>
-      <input type="date" id="bk-date" required>
-    </div>
-    <div class="form-group">
-      <label>备注（选填）</label>
-      <textarea id="bk-note" placeholder="说说你的具体需求..."></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">提交预约</button>
-    <p class="form-msg" id="formMsg">✅ 预约提交成功！正正羊羊会尽快联系你。</p>
-  </form>
+      <input type="text" id="bk-target" placeholder="目标段位 / 期望效果（例如：上到 S+ / 通关 / 周目标 N 万）">
+      <textarea id="bk-note" placeholder="补充说明（账号信息、时长、特殊要求）"></textarea>
+      <button type="submit" class="btn btn-primary">提交预约</button>
+      <p class="form-msg" id="formMsg">✅ 预约已提交！西歪叉叉会尽快联系你。</p>
+    </form>
+  </div>
 </section>
 
 <!-- ===== Contact ===== -->
-<section id="contact">
+<section id="contact" class="contact">
   <div class="section-label reveal">Contact</div>
   <h2 class="section-title reveal">联系方式</h2>
-  <div class="contact-info reveal">
-    <div class="name">正正羊羊</div>
-    <div class="desc">史上最帅最全能之人 · 随时为你服务</div>
+  <div class="reveal">
+    <div class="name">西歪叉叉</div>
+    <div class="desc">深圳湾业主 · 棋牌通吃 · 端游魔王</div>
     <div class="social">
       <a href="#" title="微信">💬</a>
+      <a href="#" title="QQ">🐧</a>
       <a href="#" title="电话">📞</a>
       <a href="#" title="邮箱">📧</a>
-      <a href="#" title="抖音">🎵</a>
     </div>
   </div>
 </section>
 
 <!-- ===== Footer ===== -->
 <footer>
-  © 2026 正正羊羊专属服务网站 · All Rights Reserved
+  © 2026 西歪叉叉 · Powered by QClaw
 </footer>
 
 <script>
-  // ===== Scroll Reveal =====
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ===== Booking Form =====
   function handleSubmit(e) {
     e.preventDefault();
     const msg = document.getElementById('formMsg');
     msg.style.display = 'block';
-    setTimeout(() => { e.target.reset(); msg.style.display = 'none'; }, 3500);
+    setTimeout(() => { e.target.reset(); msg.style.display = 'none'; }, 4000);
     return false;
   }
-
-  // ===== Set min date to today =====
-  document.getElementById('bk-date').min = new Date().toISOString().split('T')[0];
 </script>
 
 </body>
